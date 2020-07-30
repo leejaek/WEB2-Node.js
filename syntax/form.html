@@ -1,0 +1,13 @@
+<!--아래의 form 양식에 맞게 작성하여 보낼 경우 queryString 형태로 데이터를 전송하는 HTML 기능 -->
+<form action="http://localhost:3000/process_create" method="post">
+  <p><input type="text" name="title"></p>
+  <p>
+    <textarea name="description"></textarea>
+  </p>
+  <p>
+    <input type="submit">
+  </p>
+</form>
+<!--http://localhost:3000/process_create?title=hi&description=lorem와 같이 URL에 데이터 내용이 포함되어 있으면 위험-->
+<!--서버로부터 사용자가 정보를 가져올 때는 method="get"(default가 get이기 때문에 생략 시 자동으로 설정됨), 서버의 데이터를 수정, 삭제, 생성 시 method="post"-->
+<!--form action 에서 method="post" 사용 시 URL에 눈에 보이지 않게 서버로 전송함 -->
