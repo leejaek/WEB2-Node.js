@@ -22,4 +22,4 @@ while(i < number.length){
   i = i + 1;
 }
 
-console.log(`total : ${total}`)
+console.log(`total : ${total}`) // total : 452
