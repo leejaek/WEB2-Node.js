@@ -11,3 +11,15 @@ function sum(first, second){ //Parameter Variable: 매개변수 (입력값요소
 }
 
 sum(2,4) //argument: 입력값 요소
+
+///함수 출력 ///
+
+console.log(Math.round(1.6));
+//filewrite('result.txt', Math.round(1.6));
+//email('egoing@aaa.com', Math.round(1.6));
+
+//위와 같이 함수 출력값을 활용하기 위해서는 return 값을 return 하도록함
+
+function sum(first, second){
+  return first + second; //return 시점에서 함수가 종료됨
+}
