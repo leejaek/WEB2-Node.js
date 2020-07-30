@@ -17,4 +17,4 @@ console.log(arr.length); // 4
 
 //배열 내 원소 추가
 arr.push('E');
-console.log(arr);
+console.log(arr); //[ 'A', 'B', 3, 'D', 'E' ]
