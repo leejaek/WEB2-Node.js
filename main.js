@@ -66,7 +66,7 @@ var app = http.createServer(function(request,response){
             var title = 'WEB - create';
             var list = templateList(filelist);
             var template = templateHTML(title, list, `
-              <form action="http://localhost:3000/create_process" method="post">
+              <form action="/create_process" method="post">
                 <p><input type="text" name="title" placeholder="title"></p>
                 <p>
                   <textarea name="description" placeholder="description"></textarea>
@@ -93,7 +93,32 @@ var app = http.createServer(function(request,response){
             response.end('success');
           })
       });
-    }else {
+    } else if(pathname === '/update'){
+      fs.readdir('./data', function(err, filelist){
+        fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description){
+          var title = queryData.id;
+          var list = templateList(filelist);
+          var template = templateHTML(title, list,
+            //사용자가 수정할 파일을 찾을 때 기존 title 명으로 찾으면 제목 수정 시 문제가 생길 수 있기 때문에
+            //hidden 속성을 활용해 id라는 이름으로 기존 title 값을 기억해₩
+          `
+          <form action="/update_process" method="post">
+            <input type = "hidden" name="id" value="${title}">
+            <p><input type="text" name="title" placeholder="title" value = "${title}"></p>
+            <p>
+              <textarea name="description" placeholder="description" value = "${description}"></textarea>
+            </p>
+            <p>
+              <input type="submit">
+            </p>
+          </form>
+          `,
+          `<a href ="/create">create</a> <a href = "/update?id=${title}">update</a>`);
+          response.writeHead(200);
+          response.end(template);
+          });
+        });
+    } else {
       response.writeHead(404);
       response.end('Not Found');
     }
