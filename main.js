@@ -99,14 +99,12 @@ var app = http.createServer(function(request,response){
           var title = queryData.id;
           var list = templateList(filelist);
           var template = templateHTML(title, list,
-            //사용자가 수정할 파일을 찾을 때 기존 title 명으로 찾으면 제목 수정 시 문제가 생길 수 있기 때문에
-            //hidden 속성을 활용해 id라는 이름으로 기존 title 값을 기억해₩
           `
           <form action="/update_process" method="post">
             <input type = "hidden" name="id" value="${title}">
             <p><input type="text" name="title" placeholder="title" value = "${title}"></p>
             <p>
-              <textarea name="description" placeholder="description" value = "${description}"></textarea>
+              <textarea name="description" placeholder="description">${description}</textarea>
             </p>
             <p>
               <input type="submit">
@@ -117,6 +115,24 @@ var app = http.createServer(function(request,response){
           response.writeHead(200);
           response.end(template);
           });
+        });
+    } else if (pathname === '/update_process') {
+      var body = '';
+      request.on('data',function(data){
+          body = body + data;
+      });
+      request.on('end',function(){
+          var post = qs.parse(body);
+          var id = post.id;
+          var title = post.title;
+          var description = post.description;
+          fs.rename(`data/${id}`, `data/${title}`, function(err){
+            fs.writeFile(`data/${title}`, description, 'utf8', function(err){
+              response.writeHead(302, {Location: `/?id=${title}`});
+              response.end();
+          })
+        })
+          console.log(post);
         });
     } else {
       response.writeHead(404);
